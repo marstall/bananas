@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Bananas": {
+            "applicationId": "sWeVUikcOz1sL2EJIfgMnmAgwpF4Zq8cWW8CVZg1", 
+            "masterKey": "k6LWalEwqjm6V5UYWEipkCcMo5kJYyy1BokIFBSS"
+        }, 
+        "_default": {
+            "link": "Bananas"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.2"
+    }
+}

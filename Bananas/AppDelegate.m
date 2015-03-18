@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "UIKit/UIKit.h"
+#import "ListViewController.h"
+#import "KeychainManager.h"
+#import "Bananas.h"
 
 @interface AppDelegate ()
 
@@ -14,11 +18,79 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+
+    backend = [[Backend alloc] initWithApplication:application andLaunchOptions:launchOptions];
+
+    self.logArray = [[NSMutableArray alloc] init];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[[ViewLogger alloc] init]];
+   
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+//    screenRect.size.height = 1200;
+    self.window = [[UIWindow alloc] initWithFrame:screenRect];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    // create a listcontroller
+    self.listViewController = [[ListViewController alloc] init];
+    
+    UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:self.listViewController];
+    [navigationController setToolbarHidden:YES];
+
+    
+    self.window.rootViewController = navigationController;
+ 
     return YES;
 }
+
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [BananasParseManager.sharedManager updatePushDeviceToken:deviceToken];
+    [backend updateListUUIDOnParse];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if (error.code == 3010) {
+        DDLogVerbose(@"Push notifications are not supported in the iOS Simulator.");
+    } else {
+        // show some alert or otherwise handle the failure to register.
+        DDLogVerbose(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+                                fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
+{
+    // following code is boilerplate for updating the icon badge
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation fetchInBackgroundWithBlock:^(PFObject * object, NSError * error) {
+        if (((PFInstallation *)object).badge != 0) {
+            ((PFInstallation *)object).badge = 0;
+            [((PFInstallation *)object) saveEventually];
+        }
+    }];
+
+
+    NSDictionary * aps = [userInfo valueForKey:@"aps"];
+    NSString *pushMessage = [aps valueForKey:@"alert"];
+    DDLogInfo(@"#display received push... : %@",pushMessage);
+
+    if ([PushManager isMessageISentRecently:pushMessage])
+    {
+        DDLogInfo(@"#display ignored push because it's one that i sent ... : %@",pushMessage);
+        return;
+    }
+
+    DDLogInfo(@"#display push valid, should sync now: %@",pushMessage);
+//    [self.listViewController sync:self];
+    notify(kPerformSyncNotification);
+    handler;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -32,10 +104,21 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    if (![backend startSharing]) notify(kPerformSyncNotification);;
+
+    [backend resetBadge];
+    
+    [backend setupListUUID];
+    [backend startSharing];
+    
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    DDLogVerbose(@"#display currentInstallation's listUUID is %@",makeUUIDTag(currentInstallation[@"listUUID"]));
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -86,7 +169,7 @@
         error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
         // Replace this with code to handle the error appropriately.
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        DDLogVerbose(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
@@ -118,10 +201,28 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            DDLogVerbose(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
+}
+
+
+
+- (void)testKeychainManager
+{
+    KeychainManager * sharedManager = KeychainManager.sharedManager;
+    [sharedManager setValue:@"1234" forKey:@"chrisID"];
+    [sharedManager setValue:@"5678" forKey:@"paulID"];
+    NSString * value1 = [sharedManager getValueForKey:@"chrisID"];
+    NSString * value2 = [sharedManager getValueForKey:@"paulID"];
+    if ([value1 isEqualToString:@"1234"] && [value2 isEqualToString:@"5678"]) DDLogVerbose(@"keychain add/update ok");
+    [sharedManager deleteKey:@"chrisID"];
+    NSString * value3 = [sharedManager getValueForKey:@"chrisID"];
+    if (!value3) DDLogVerbose(@"keychain delete ok");
+    [sharedManager setValue:@"argh" forKey:@"paulID"];
+    NSString * value4 = [sharedManager getValueForKey:@"paulID"];
+    if ([value4 isEqualToString:@"argh"]) DDLogVerbose(@"keychain update ok");
 }
 
 @end

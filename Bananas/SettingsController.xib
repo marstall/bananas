@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsController">
+            <connections>
+                <outlet property="disconnectSwitch" destination="Mcy-Tl-e9j" id="GhD-SF-H8b"/>
+                <outlet property="uuidLabel" destination="8Ze-t1-RNj" id="CGg-mB-eDG"/>
+                <outlet property="view" destination="iN0-l3-epB" id="ma1-FW-qDn"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view multipleTouchEnabled="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHARING WITH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kry-aA-rU6">
+                    <rect key="frame" x="10" y="24" width="89.5" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ze-t1-RNj">
+                    <rect key="frame" x="0.0" y="47" width="608" height="41"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="ox8-Ym-8t9"/>
+                    </constraints>
+                    <attributedString key="attributedText">
+                        <fragment content="Label">
+                            <attributes>
+                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="truncatingTail" baseWritingDirection="natural" firstLineHeadIndent="8.5"/>
+                            </attributes>
+                        </fragment>
+                    </attributedString>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mcy-Tl-e9j">
+                    <rect key="frame" x="542" y="52" width="51" height="31"/>
+                    <connections>
+                        <action selector="disconnectSwitchValueChanged:" destination="-1" eventType="valueChanged" id="v72-cR-sQV"/>
+                    </connections>
+                </switch>
+            </subviews>
+            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="8Ze-t1-RNj" firstAttribute="top" secondItem="Kry-aA-rU6" secondAttribute="bottom" constant="8.5" id="2Q3-tq-99A"/>
+                <constraint firstItem="Kry-aA-rU6" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="24" id="9iG-Om-TR2"/>
+                <constraint firstItem="8Ze-t1-RNj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="-1" id="FpX-Om-WRe"/>
+                <constraint firstAttribute="trailing" secondItem="Mcy-Tl-e9j" secondAttribute="trailing" constant="8" id="UOF-Ae-14z"/>
+                <constraint firstItem="8Ze-t1-RNj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bWm-na-vZ4"/>
+                <constraint firstItem="Kry-aA-rU6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="fle-MN-nIK"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8Ze-t1-RNj" secondAttribute="trailing" constant="-1" id="iQD-ZP-TCE"/>
+                <constraint firstItem="8Ze-t1-RNj" firstAttribute="centerY" secondItem="Mcy-Tl-e9j" secondAttribute="centerY" id="qvq-Cn-wVf"/>
+                <constraint firstAttribute="trailing" secondItem="8Ze-t1-RNj" secondAttribute="trailing" constant="-8" id="rTK-mC-iLV"/>
+            </constraints>
+            <point key="canvasLocation" x="108" y="198"/>
+        </view>
+    </objects>
+</document>
