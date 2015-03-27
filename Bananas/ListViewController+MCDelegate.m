@@ -65,12 +65,12 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
 
-    NSString * uuidString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    DDLogInfo(@"#display received new listUUID %@ via multipeer",makeUUIDTag(uuidString));
+        NSString * uuidString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        DDLogInfo(@"#display received new listUUID %@ via multipeer",makeUUIDTag(uuidString));
 
-    [backend setListUUID:uuidString];
+        [backend setListUUID:uuidString];
+        [backend startSharing];
     });
-    [backend startSharing];
 
 }
 

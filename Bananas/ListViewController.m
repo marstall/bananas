@@ -7,7 +7,6 @@
 //
 
 #import "ListViewController.h"
-#import "EditItemViewController.h"
 #import "CoreDataManager.h"
 @import CoreData;
 #import "MultipeerManager.h"

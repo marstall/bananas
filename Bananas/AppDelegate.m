@@ -114,7 +114,7 @@
     [backend resetBadge];
     
     [backend setupListUUID];
-    [backend startSharing];
+//    [backend startSharing];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     DDLogVerbose(@"#display currentInstallation's listUUID is %@",makeUUIDTag(currentInstallation[@"listUUID"]));

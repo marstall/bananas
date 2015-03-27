@@ -33,7 +33,6 @@
     dispatch_async(self.queue, ^{
         if ([self isSharing])
         {
-            NSMutableArray * items = Item.allItems;
             DDLogVerbose(@"syncing ...");
             // get all values from remote store
             // loop through them
@@ -45,6 +44,7 @@
             [Item remoteFindAllInListExceptStale:listUUID withBlock:^(NSArray * pfObjects, NSError * error) {
                 if (error) return;
                 if (!pfObjects) return;
+                NSMutableArray * items = Item.allItems;
                 for (Item * item in items)
                 {
                     item.foundRemoteVersion=NO;

@@ -50,7 +50,6 @@
 		EAE563261A5B18750066C762 /* PushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE563251A5B18750066C762 /* PushManager.m */; };
 		EAE563291A5B3DDC0066C762 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE563281A5B3DDC0066C762 /* ItemTableViewCell.m */; };
 		EAE5632B1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAE5632A1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib */; };
-		EAEEA6361A44A86100AD22E9 /* EditItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAEEA6351A44A86100AD22E9 /* EditItemViewController.xib */; };
 		EAEEA6391A44C80700AD22E9 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEEA6381A44C80700AD22E9 /* CoreDataManager.m */; };
 /* End PBXBuildFile section */
 
@@ -132,7 +131,6 @@
 		EAE563271A5B3DDC0066C762 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		EAE563281A5B3DDC0066C762 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		EAE5632A1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemTableViewCellEditMode.xib; sourceTree = "<group>"; };
-		EAEEA6351A44A86100AD22E9 /* EditItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditItemViewController.xib; sourceTree = "<group>"; };
 		EAEEA6371A44C80700AD22E9 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
 		EAEEA6381A44C80700AD22E9 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -263,7 +261,6 @@
 				EAEEA6381A44C80700AD22E9 /* CoreDataManager.m */,
 				EAE563241A5B18750066C762 /* PushManager.h */,
 				EAE563251A5B18750066C762 /* PushManager.m */,
-				EAEEA6351A44A86100AD22E9 /* EditItemViewController.xib */,
 				EAB923351A433F4200793176 /* Images.xcassets */,
 				EA4C5DBE1A4E2617008DDD8B /* Item.h */,
 				EA4C5DBF1A4E2617008DDD8B /* Item.m */,
@@ -418,7 +415,6 @@
 			files = (
 				EAE5632B1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib in Resources */,
 				EA4C5DC91A4E420E008DDD8B /* global.json in Resources */,
-				EAEEA6361A44A86100AD22E9 /* EditItemViewController.xib in Resources */,
 				EA4C5DCA1A4E420E008DDD8B /* index.html in Resources */,
 				EA43BBA01A54C3AB0027B717 /* SettingsController.xib in Resources */,
 				EAB923361A433F4200793176 /* Images.xcassets in Resources */,
