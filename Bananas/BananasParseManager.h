@@ -14,6 +14,7 @@
 + (instancetype)sharedManager;
 - (void)setupParseUser;
 - (void)setParseListUUID:(NSString *)listUUID;
+- (NSMutableDictionary *) buildDefaultDictionary;
 
 
 @end

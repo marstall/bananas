@@ -17,5 +17,5 @@ static NSString * const PARSE_CLIENT_KEY=@"jIw9gPqHIiNry3NB0d70qf2EqHvxchWUxwXlI
 @interface ParseManager : NSObject
 - (void)initParseWithLaunchOptions:(NSDictionary*)launchOptions andApplication:(UIApplication * )application;
 - (void)updatePushDeviceToken:(NSData*)deviceToken;
-
+- (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions;
 @end

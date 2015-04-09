@@ -58,6 +58,7 @@
         AppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
 
         [appDelegate.logArray addObject:logMsg];
+        
     }
 }
 

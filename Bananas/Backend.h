@@ -28,6 +28,8 @@
 
 - (NSString *)resetListUUID;
 
+- (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions;
+
 
 - (void)resetBadge;
 @end

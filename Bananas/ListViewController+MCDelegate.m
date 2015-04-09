@@ -37,6 +37,8 @@
             NSError *error;
             [session sendData:data toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
 //            [backend startSharing];
+            self.didInitiateMultipeerSession=NO; // clear out this flag for next time in cases of connecting and reconnecting within a session
+
         }
         else
         {
@@ -50,14 +52,21 @@
         });
 
         // register for push applications now
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+        } else {
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        }
         
-        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                        UIUserNotificationTypeBadge |
-                                                        UIUserNotificationTypeSound);
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                                 categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+//        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+//                                                        UIUserNotificationTypeBadge |
+//                                                        UIUserNotificationTypeSound);
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+//                                                                                 categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
 }
 

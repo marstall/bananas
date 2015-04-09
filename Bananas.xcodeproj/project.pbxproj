@@ -38,6 +38,8 @@
 		EA6835B31A697C3A006A6EE1 /* ParseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6835B21A697C3A006A6EE1 /* ParseManager.m */; };
 		EA6835B61A697C71006A6EE1 /* BananasParseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6835B51A697C71006A6EE1 /* BananasParseManager.m */; };
 		EA6835BA1A7040DC006A6EE1 /* LogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA6835B91A7040DC006A6EE1 /* LogViewController.xib */; };
+		EA6CDF7C1ACC802800EB1999 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6CDF7B1ACC802700EB1999 /* Default-568h@2x.png */; };
+		EA8AA5F91AD1FA4000DBF39F /* analytics.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA8AA5F81AD1FA4000DBF39F /* analytics.txt */; };
 		EAB923281A433F4200793176 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB923271A433F4200793176 /* main.m */; };
 		EAB9232B1A433F4200793176 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB9232A1A433F4200793176 /* AppDelegate.m */; };
 		EAB9232E1A433F4200793176 /* Bananas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAB9232C1A433F4200793176 /* Bananas.xcdatamodeld */; };
@@ -108,6 +110,8 @@
 		EA6835B41A697C71006A6EE1 /* BananasParseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BananasParseManager.h; sourceTree = "<group>"; };
 		EA6835B51A697C71006A6EE1 /* BananasParseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BananasParseManager.m; sourceTree = "<group>"; };
 		EA6835B91A7040DC006A6EE1 /* LogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogViewController.xib; sourceTree = "<group>"; };
+		EA6CDF7B1ACC802700EB1999 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		EA8AA5F81AD1FA4000DBF39F /* analytics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = analytics.txt; sourceTree = "<group>"; };
 		EA8C3E541A532AC400183663 /* Bananas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bananas.h; sourceTree = "<group>"; };
 		EAB923221A433F4200793176 /* Bananas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bananas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB923261A433F4200793176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 		EAB923191A433F4200793176 = {
 			isa = PBXGroup;
 			children = (
+				EA8AA5F81AD1FA4000DBF39F /* analytics.txt */,
+				EA6CDF7B1ACC802700EB1999 /* Default-568h@2x.png */,
 				EAE0CB3C1A531F22000C3FF3 /* Podfile */,
 				EA4C5DBA1A4E0563008DDD8B /* Bolts.framework */,
 				EA4C5DA41A4E03B9008DDD8B /* AudioToolbox.framework */,
@@ -415,6 +421,8 @@
 			files = (
 				EAE5632B1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib in Resources */,
 				EA4C5DC91A4E420E008DDD8B /* global.json in Resources */,
+				EA6CDF7C1ACC802800EB1999 /* Default-568h@2x.png in Resources */,
+				EA8AA5F91AD1FA4000DBF39F /* analytics.txt in Resources */,
 				EA4C5DCA1A4E420E008DDD8B /* index.html in Resources */,
 				EA43BBA01A54C3AB0027B717 /* SettingsController.xib in Resources */,
 				EAB923361A433F4200793176 /* Images.xcassets in Resources */,
@@ -604,7 +612,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Bananas/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-l\"Pods-CocoaLumberjack\"";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -624,7 +632,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Bananas/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-l\"Pods-CocoaLumberjack\"";
 				PRODUCT_NAME = "$(TARGET_NAME)";

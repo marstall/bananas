@@ -29,6 +29,8 @@ function createIconImage()
 
 # Create all the suggested icons for both the iPhone and iPad platforms to ensure the best appearance.
 createIconImage 29 29_icon_settings.png
+createIconImage 57 57_icon_settings@2x.png
+createIconImage 114 114_icon_settings@2x.png
 createIconImage 58 58_icon_settings@2x.png
 createIconImage 87 87_icon_settings@3x.png
 createIconImage 40 40_icon_spotlight.png

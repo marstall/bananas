@@ -169,5 +169,11 @@
     }
 }
 
+- (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions
+{
+    [[BananasParseManager sharedManager] event:name dimensions:dimensions];
+}
+
+
 @end
 

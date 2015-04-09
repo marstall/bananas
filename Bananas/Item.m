@@ -150,6 +150,7 @@
     DDLogInfo(@"saving %lu values (%i th call)",(unsigned long)numChanges,cnt++);
     NSString * pushMessage=nil;
     NSString * textString = [self valueForKey:@"text"] ;
+    [backend event:ITEM_ADD dimensions:@{ITEM_TEXT:textString}];
     NSString * listUUID = [[KeychainManager sharedManager] getValueForKey:@"listUUID"];
     self.pfObject= [PFObject objectWithClassName:@"Item"];
     // validations

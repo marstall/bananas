@@ -100,5 +100,48 @@
     
 }
 
+/*
+ - action
+ lifecycle: (launch, minimize)
+ items: (add, delete, move, mark as done,mark as not done)
+ connecting: (invite issued, failed peer search, invite accepted, disconnect)
+ sync: (sync)
+ - data
+ basic: (action category, time,device info, device name, device name connected to, listUUID, install date, any PID, list items w/statuses)
+ lifecycle: ()
+ items: (item name, status)
+ connecting: (target device name)
+ sync: (new items)
+ 
+ LIFECYCLE_LAUNCH
+ LIFECYCLE_MINIMIZE
+ ITEM_ADD
+ ITEM_DELETE
+ ITEM_MOVE
+ ITEM_DONE
+ ITEM_UNDONE
+ CONNECTING_INVITE_ISSUED
+ CONNECTING_FAILED_PEER_SEARCH
+ CONNECTING_INVITE_ACCEPTED
+ CONNECTING_DISCONNECT
+ SYNC
+ PUSH_SENT
+ PUSH_RECEIVED
+ */
+
+- (NSMutableDictionary *) buildDefaultDictionary
+{
+    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+    UIDevice * device = [UIDevice currentDevice];
+    dict[@"listUUID"] = [backend listUUID];
+    dict[@"device_name"] = device.name;
+    dict[@"device_systemName"] = device.systemName;
+    dict[@"device_systemVersion"] = device.systemVersion;
+    dict[@"device_model"] = device.model;
+//    dict[@"device_identifierForVendor"] = device.identifierForVendor;
+    return dict;
+}
+
+
 
 @end

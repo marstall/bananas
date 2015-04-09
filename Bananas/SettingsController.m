@@ -42,32 +42,61 @@
     {
         NSString * displayName = [[UserDefaultsManager sharedManager] getValueForKey:@"peerIAmConnectedTo"];
         NSString * msg = [NSString stringWithFormat:@"Do you want to disconnect from %@? You will lose your current list.",displayName];
-        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Warning"            message:msg
-            preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * disconnectAction = [UIAlertAction actionWithTitle:@"Disconnect"
-                                            style:UIAlertActionStyleDestructive
-                                            handler: ^(UIAlertAction * alertAction){
-                                                dispatch_async(dispatch_get_main_queue(), ^{
-            [self setupUUIDLabel];
-            [backend resetListUUID];
-            [[BananasParseManager sharedManager] setupParseUser];
-            notify(kRefreshListUI);
-            notify(kPerformSyncNotification);
-            // send push to delete listUUID on the other side
-            // [PushManager sendPushMessage:@"List deleted" forQuery:@{@"listUUID":listUUID}];
-        });}];
-        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * alertAction){
-            [self.disconnectSwitch setOn:YES];
-        }];
-        
-        [alertController addAction:disconnectAction];
-        [alertController addAction:cancelAction];
-        [self presentViewController:alertController animated:YES completion:nil];
+        if ([UIAlertController class])
+        {
+            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Warning"            message:msg
+                preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * disconnectAction = [UIAlertAction actionWithTitle:@"Disconnect"
+                                                style:UIAlertActionStyleDestructive
+                                                handler: ^(UIAlertAction * alertAction){
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                [self setupUUIDLabel];
+                [backend resetListUUID];
+                [[BananasParseManager sharedManager] setupParseUser];
+                notify(kRefreshListUI);
+                notify(kPerformSyncNotification);
+                // send push to delete listUUID on the other side
+                // [PushManager sendPushMessage:@"List deleted" forQuery:@{@"listUUID":listUUID}];
+            });}];
+            UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * alertAction){
+                [self.disconnectSwitch setOn:YES];
+            }];
+            
+            [alertController addAction:disconnectAction];
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        else
+        {
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:msg delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Disconnect", nil];
+            
+            [alert show];
+        }
     }
     else
     {
         DDLogVerbose(@"on");
         [self.disconnectSwitch setOn:NO];
+    }
+}
+
+- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        
+        //User clicked cancel
+        DDLogVerbose(@"#display cancel clicked.");
+        [self.disconnectSwitch setOn:YES];
+    }
+    else
+    {
+        [self setupUUIDLabel];
+        [backend resetListUUID];
+        [[BananasParseManager sharedManager] setupParseUser];
+        notify(kRefreshListUI);
+        notify(kPerformSyncNotification);
+        DDLogVerbose(@"#display ok clicked.");
     }
 }
 

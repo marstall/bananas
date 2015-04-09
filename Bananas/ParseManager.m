@@ -7,6 +7,7 @@
 //
 
 #import "ParseManager.h"
+#import "Backend.h"
 
 @implementation ParseManager
 
@@ -34,6 +35,18 @@
 {
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
+}
+
+- (NSMutableDictionary *) buildDefaultDictionary;
+{
+    return [NSMutableDictionary dictionary];
+}
+
+- (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions
+{
+    NSMutableDictionary* defaultDictionary = [self buildDefaultDictionary];
+    [defaultDictionary addEntriesFromDictionary:dimensions];
+    [PFAnalytics trackEvent:name dimensions:defaultDictionary];
 }
 
 @end
