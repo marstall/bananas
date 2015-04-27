@@ -96,6 +96,7 @@
                                 action:@selector(hideDoneItems:)
                         ];
     }
+    self.doneItemsButton.tintColor=UIColorFromRGB(0x777777);
     UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     self.toolbarItems=@[self.doneItemsButton,space,connectionButton];
 }
@@ -313,11 +314,11 @@
     if (row>=self.items.count) return;
     Item * item = [self.items objectAtIndex:row];
     item.shouldUpdateRemoteCopy=YES;
+    [backend event:ITEM_DELETE dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
     [self.items removeObject:item];
     
     // remove item from database
     [CoreDataManager removeObject:item];
-    [backend event:ITEM_DELETE dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
 
     // tell table view to delete the row
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
