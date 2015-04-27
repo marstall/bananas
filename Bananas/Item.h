@@ -24,7 +24,7 @@
 
     + (instancetype)create:(NSString *) text withUUID:(NSString *)itemUUID;
 
-    + (NSArray *) findAllInList:(NSString *) listUUID;
+    + (void) remoteFindAllInList:(NSString *) listUUID  withBlock:(void (^)(NSArray*,NSError *))block; // show active first, then inactive
     + (void) remoteFindAllInListExceptStale:(NSString *) listUUID withBlock:(void (^)(NSArray*,NSError *))block;
 
     - (void) mergeWith:(PFObject *) pfObject;

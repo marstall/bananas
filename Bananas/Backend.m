@@ -27,11 +27,22 @@
     }
     return self;
 }
-
 - (IBAction)sync
 {
+    [self syncWithDoneItems:FALSE];
+}
+
+- (IBAction)syncWithDoneItems:(BOOL)showDoneItems
+{
+    [self syncWithDoneItems:showDoneItems AndBlock:nil];
+}
+
+- (IBAction)syncWithDoneItems:(BOOL)showDoneItems AndBlock: (void (^)())passed_block
+{
     dispatch_async(self.queue, ^{
-        if ([self isSharing])
+        void (^block)(NSArray * pfObjects, NSError * error) ;
+        NSString * listUUID = [KeychainManager.sharedManager getValueForKey:@"listUUID"];
+//        if ([self isSharing])
         {
             DDLogVerbose(@"syncing ...");
             // get all values from remote store
@@ -39,9 +50,8 @@
             // for each, find local match via itemUUID
             // if a match is found, perform merge logic
             // if no match is found, add row
-            NSString * listUUID = [KeychainManager.sharedManager getValueForKey:@"listUUID"];
-            //        static dispatch_once_t onceToken;
-            [Item remoteFindAllInListExceptStale:listUUID withBlock:^(NSArray * pfObjects, NSError * error) {
+
+            block = ^(NSArray * pfObjects, NSError * error) { // declare callback block
                 if (error) return;
                 if (!pfObjects) return;
                 NSMutableArray * items = Item.allItems;
@@ -54,7 +64,7 @@
                 {
                     BOOL matchFound = NO;
                     for (Item * item in items) // for each local object
-                     {
+                    {
                         // update existing if it is a match
                         if ([[pfObject valueForKey:@"itemUUID"] isEqualToString: [item valueForKey:@"itemUUID"]])
                         {
@@ -67,12 +77,13 @@
                     {
                         // create new
                         Item *item = [Item create:[pfObject valueForKey:@"text"] withUUID:[pfObject valueForKey:@"itemUUID"]];
+                        [item setValue:[pfObject valueForKey:@"status"] forKey:@"status"];
                         item.shouldUpdateRemoteCopy=NO;
                         item.foundRemoteVersion=YES;
                         [items addObject:item];
                         [CoreDataManager save];
                     }
-                } 
+                }
                 
                 // delete local objects not found in remote repo
                 NSMutableArray * itemsToRemove = [NSMutableArray new];
@@ -91,9 +102,12 @@
                 [CoreDataManager save];
                 notify(kRefreshListUI);
                 DDLogVerbose(@"sync complete.");
-                
-            }];
+                [passed_block invoke];
+            };
         }
+   
+        if (showDoneItems) [Item remoteFindAllInList:listUUID withBlock:block];
+        else [Item remoteFindAllInListExceptStale:listUUID withBlock:block];
     }); // dispatch_async
 }
 
@@ -167,6 +181,10 @@
         currentInstallation.badge = 0;
         [currentInstallation save];
     }
+}
+- (void)event:(NSString *) name
+{
+    [self event:name dimensions:nil];
 }
 
 - (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions

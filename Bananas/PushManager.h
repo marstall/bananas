@@ -12,4 +12,5 @@
 @interface PushManager : NSObject
     + (BOOL)isMessageISentRecently:(NSString *)pushMessage;
     +(void)sendPushMessage:(NSString*) pushMessage forQuery:(NSDictionary*) queryDictionary;
+    + (void)clearCount;
 @end

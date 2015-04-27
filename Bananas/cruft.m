@@ -29,3 +29,49 @@ setting title bar colors:
      [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
  
 */
+
+/*
+ if ([UIAlertController class])
+ {
+ UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil              message:nil
+ preferredStyle:UIAlertControllerStyleActionSheet];
+ UIAlertAction * editAction = [UIAlertAction actionWithTitle:@"Edit"
+ style:UIAlertActionStyleDefault
+ handler: ^(UIAlertAction * alertAction){
+ dispatch_async(dispatch_get_main_queue(), ^{
+ [self handleEditAction];
+ });}];
+ UIAlertAction * reminderAction = [UIAlertAction actionWithTitle:@"Send reminder"
+ style:UIAlertActionStyleDefault
+ handler: ^(UIAlertAction * alertAction){
+ dispatch_async(dispatch_get_main_queue(), ^{
+ //
+ });}];
+ UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:@"Delete"
+ style:UIAlertActionStyleDestructive
+ handler: ^(UIAlertAction * alertAction){
+ dispatch_async(dispatch_get_main_queue(), ^{
+ [self handleDeleteAction];
+ });}];
+ UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * alertAction){
+ }];
+ 
+ [alertController addAction:editAction];
+ [alertController addAction:reminderAction];
+ [alertController addAction:deleteAction];
+ [alertController addAction:cancelAction];
+ [self.controller presentViewController:alertController animated:YES completion:nil];
+ }
+ else
+ {
+ UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:@"Edit",@"Send reminder", nil];
+ [actionSheet showInView:self.contentView];
+ }*/
+
+/*    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:
+ @selector(handleDeleteAction:)];
+ 
+ recognizer.direction = UISwipeGestureRecognizerDirectionRight;
+ recognizer.numberOfTouchesRequired = 1;
+ [self addGestureRecognizer:recognizer];
+ */

@@ -24,18 +24,28 @@
 @implementation ListViewController
 
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.cellBeingEdited=nil;
+    self.textFieldShouldBecomeFirstResponder=NO;
+    self.didInitiateMultipeerSession=NO;
+    [self.tableView reloadData];
+}
+
+
 - (instancetype)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
+        self.cellBeingEdited=nil;
         self.textFieldShouldBecomeFirstResponder=NO;
         self.didInitiateMultipeerSession=NO;
         
-        self.navigationItem.title = NSLocalizedString(@"Bananas", "@Bananas page title");
+        self.navigationItem.title = @"bananas";
         
         
-        self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//        self.navigationItem.leftBarButtonItem = self.editButtonItem;
         [self doSetToolBarItems:NO];
         // load the items into an array
         // 1. load model file.
@@ -51,7 +61,6 @@
         
         observe(self, @selector(sync:), kPerformSyncNotification);
         observe(self, @selector(refreshUI:), kRefreshListUI);
-
     }
     return self;
 }
@@ -63,18 +72,12 @@
     UIBarButtonItem * connectionButton = nil;
     if (syncActive)
     {
-        connectionButton = [[UIBarButtonItem alloc] initWithTitle:@"Sharing" style:UIBarButtonItemStylePlain target:self action:@selector(settings:)];
-//        UIFont *f1 = [UIFont fontWithName:@"Helvetica" size:18.0];
-//        NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                              f1, NSFontAttributeName,
-//                              
-//                              nil];
-//        [connectionButton setTitleTextAttributes:dict forState:UIControlStateNormal];
+        connectionButton = [[UIBarButtonItem alloc] initWithTitle:@"sharing" style:UIBarButtonItemStylePlain target:self action:@selector(settings:)];
     }
     else
     {
         connectionButton = [[UIBarButtonItem alloc]
-                            initWithTitle:@"Share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
+                            initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
                                          ];
     }
     UIBarButtonItem *syncButton =  [[UIBarButtonItem alloc]
@@ -82,14 +85,21 @@
                         target:self action: @selector(sync_pressed:)
                         ];
     [syncButton setEnabled:syncActive];
-    self.navigationItem.rightBarButtonItem=connectionButton;
-
-}
-
-- (IBAction)enterEditMode:(id)sender
-{
     
+    if (self.shouldShowDoneItems) [self setHideDoneItemsButton];
+    else [self setShowDoneItemsButton];
+    if (!self.doneItemsButton)
+    {
+        self.doneItemsButton = [[UIBarButtonItem alloc]
+                                         initWithTitle:@"show done items"
+                                style:UIBarButtonItemStylePlain target:self
+                                action:@selector(hideDoneItems:)
+                        ];
+    }
+    UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    self.toolbarItems=@[self.doneItemsButton,space,connectionButton];
 }
+
 
 - (IBAction)settings:(id)sender
 {
@@ -108,15 +118,12 @@
     navController.modalPresentationStyle = UIModalPresentationFormSheet;
     settingsController.edgesForExtendedLayout = UIRectEdgeNone;
 
-    settingsController.navigationItem.title=@"Settings";
+    settingsController.navigationItem.title=@"Sharing";
     [self presentViewController:navController animated:YES completion:nil];
-    // add view to controller
-    // display text on view?
 }
 
 - (IBAction)done:(id)sender
 {
-
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -129,7 +136,6 @@
 {
     self.items = [backend allItems];
     [self.tableView reloadData];
-
 }
 
 - (IBAction)sync:(id)sender
@@ -138,9 +144,54 @@
     [backend sync];
 }
 
+- (void) setHideDoneItemsButton
+{
+    self.doneItemsButton.title=@"hide done items";
+    self.doneItemsButton.action=@selector(hideDoneItems:);
+    [self.doneItemsButton setEnabled:YES];
+
+}
+
+- (void) setShowDoneItemsButton
+{
+    self.doneItemsButton.title=@"show done items";
+    self.doneItemsButton.action=@selector(showDoneItems:);
+    [self.doneItemsButton setEnabled:YES];
+}
+
+- (void) deactivateDoneItemsButton
+{
+    [self.doneItemsButton setEnabled:NO];
+}
+
+- (IBAction)showDoneItems:(id)sender
+{
+    self.shouldShowDoneItems=YES;
+    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"show_done_items"}];
+
+    [backend syncWithDoneItems:YES AndBlock:^{
+        [self setHideDoneItemsButton];
+    }];
+    // deactivate button
+    [self deactivateDoneItemsButton];
+}
+
+- (IBAction)hideDoneItems:(id)sender
+{
+    self.shouldShowDoneItems=NO;
+    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"hide_done_items"}];
+
+    [backend syncWithDoneItems:NO AndBlock:^{
+        [self setShowDoneItemsButton];
+    }];
+    [self deactivateDoneItemsButton];
+
+}
+
 - (IBAction)share:(id)sender
 {
-    DDLogVerbose(@"Share!");
+    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"share"}];
+
     //show browser controller window
     if (self.browserViewController)
     {
@@ -200,6 +251,7 @@
     {
         [self.textField becomeFirstResponder];
         self.textField.superview.backgroundColor=[UIColor whiteColor];
+        self.cellBeingEdited=[self.tableView cellForRowAtIndexPath:indexPath];
         return;
     }
     if (indexPath.row>=self.items.count) return;
@@ -224,15 +276,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // remove item from in-memory array
-        if (indexPath.row>=self.items.count) return;
-        Item * item = self.items[indexPath.row];
-        item.shouldUpdateRemoteCopy=YES;
-        [self.items removeObject:item];
-
-        // remove item from database
-        [CoreDataManager removeObject:item];
-        // tell table view to delete the row
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self deleteItemAtIndexPath:indexPath];
     }
 }
 
@@ -263,24 +307,30 @@
     [browserViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)deleteItemAtIndexPath:(NSIndexPath*) indexPath
+{
+    NSInteger row = indexPath.row;
+    if (row>=self.items.count) return;
+    Item * item = [self.items objectAtIndex:row];
+    item.shouldUpdateRemoteCopy=YES;
+    [self.items removeObject:item];
+    
+    // remove item from database
+    [CoreDataManager removeObject:item];
+    [backend event:ITEM_DELETE dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+
+    // tell table view to delete the row
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     DDLogVerbose(@"finished editing with '%@'",textField.text);
-    if ([textField.text isEqualToString:@""]) return;
-    Item * item = [Item create:textField.text withUUID:nil];
-    item.shouldUpdateRemoteCopy=YES;
-    [self.tableView reloadData];
-    [self.items addObject:item ];
-    [CoreDataManager save];
-//    notify(kRefreshListUI);
+    notify(kRefreshListUI);
 }
 
-
-// so instead of reloading the table when the user presses enter,
-// we should manually 'stich' onto the existing table ... close up the current table row and add a new one,
-// making it the first responder.
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+ - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if ([textField.text isEqualToString:@""])
     {
@@ -288,14 +338,44 @@
         [self.tableView reloadData];
         return YES;
     }
-
-    [textField endEditing:YES];
     
-    NSInteger ind = self.items.count;
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:ind inSection:0];
+    [textField endEditing:YES];
+    NSInteger row = ((ItemTableViewCell*)self.cellBeingEdited).indexPath.row;
+    NSInteger count = self.items.count;
+    if (row==count)
+    {
+        NSInteger ind = self.items.count;
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:ind inSection:0];
+        if ([textField.text isEqualToString:@""]) return NO;
+        Item * item = [Item create:textField.text withUUID:nil];
+        item.shouldUpdateRemoteCopy=YES;
+        [backend event:ITEM_ADD dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+
+//        [self.tableView reloadData];
+        [self.items addObject:item ];
         self.textFieldShouldBecomeFirstResponder=YES;
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+    }
+    else
+    {
+        ItemTableViewCell* cellBeingEdited = (ItemTableViewCell*)self.cellBeingEdited;
+        NSString * text = textField.text;
+        NSInteger ind = ((ItemTableViewCell *)self.cellBeingEdited).indexPath.row;
+        Item * item = [self.items objectAtIndex:ind];
+        if ([text isEqualToString:@""]&&cellBeingEdited!=nil)
+        {
+            //           [self deleteItemAtIndexPath:cellBeingEdited.indexPath];
+        }
+        else
+        {
+            [item setValue:textField.text forKey:@"text"];
+            [backend event:ITEM_EDIT dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+
+        }
+        
+    }
     [self.tableView reloadData];
+    [CoreDataManager save];
 
     return NO;
 }

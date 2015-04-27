@@ -26,10 +26,6 @@
         MCPeerID* peer = [[session connectedPeers] firstObject];
         NSString * displayName = [peer displayName];
         NSString * listUUID = [backend listUUID];
-/*        if (!listUUID)
-        {
-            listUUID = [backend resetListUUID];
-        }*/
         if (self.didInitiateMultipeerSession) // only initiator sends peerID
         {
             DDLogVerbose(@"#display successfully initiated connection (with my listUUID %@)",makeUUIDTag(listUUID));
@@ -38,11 +34,11 @@
             [session sendData:data toPeers:@[peerID] withMode:MCSessionSendDataReliable error:&error];
 //            [backend startSharing];
             self.didInitiateMultipeerSession=NO; // clear out this flag for next time in cases of connecting and reconnecting within a session
-
         }
         else
         {
             DDLogVerbose(@"#display successfully accepted connection with %@",displayName);
+            [backend event:CONNECTING_INVITE_ACCEPTED];
         }
         [[UserDefaultsManager sharedManager] setBoolean:YES forKey:@"connected"];
         [[UserDefaultsManager sharedManager] setValue:displayName forKey:@"peerIAmConnectedTo"];

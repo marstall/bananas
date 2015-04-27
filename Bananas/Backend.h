@@ -21,6 +21,8 @@
 - (BOOL)startSharing;
 - (BOOL)isSharing;
 - (IBAction)sync;
+- (IBAction)syncWithDoneItems:(BOOL)showDoneItems;
+- (IBAction)syncWithDoneItems:(BOOL)showDoneItems AndBlock: (void (^)())passed_block;
 - (void)setupListUUID;
 - (NSString *)listUUID;
 - (NSString * )setListUUID:(NSString *) listUUID;
@@ -28,6 +30,7 @@
 
 - (NSString *)resetListUUID;
 
+- (void)event:(NSString *) name;
 - (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions;
 
 

@@ -90,14 +90,15 @@
     [self setValue: remoteStatus forKey:@"status"];
 }
 
-+ (NSArray *) findAllInList:(NSString *) listUUID
++ (void) remoteFindAllInList:(NSString *) listUUID  withBlock:(void (^)(NSArray*,NSError *))block // show active first, then inactive
 {
-    if (![PFUser currentUser]) return nil;
+    if (![PFUser currentUser]) return;
     [PFQuery clearAllCachedResults];
     PFQuery *query = [PFQuery queryWithClassName:@"Item"];
     [query whereKey:@"listUUID" equalTo:listUUID];
-    NSArray * objects = [query findObjects];
-    return objects;
+    [query orderByAscending:@"status"];
+    query.limit=250;
+    [query findObjectsInBackgroundWithBlock:block];
 }
 
 + (void) remoteFindAllInListExceptStale:(NSString *) listUUID withBlock:(void (^)(NSArray*,NSError *))block
@@ -105,7 +106,7 @@
     if (![PFUser currentUser]) return ;
     NSString * predicateFormat = @"listUUID = %@ and (status='active' or (status='done' and updatedAt>%@))";
     int secondsInMinute = 60;
-    NSDate * date = [NSDate dateWithTimeInterval: -(45*secondsInMinute) sinceDate:[NSDate date]]; // 3 days ago
+    NSDate * date = [NSDate dateWithTimeInterval: -(1*secondsInMinute) sinceDate:[NSDate date]]; // 45 seconds ago
     NSPredicate * predicate = [NSPredicate predicateWithFormat:predicateFormat,listUUID,date];
     // return all where listUUID=$listUUID and (status='active' or (status='done' and updatedAt>today-7days))
     
@@ -150,7 +151,6 @@
     DDLogInfo(@"saving %lu values (%i th call)",(unsigned long)numChanges,cnt++);
     NSString * pushMessage=nil;
     NSString * textString = [self valueForKey:@"text"] ;
-    [backend event:ITEM_ADD dimensions:@{ITEM_TEXT:textString}];
     NSString * listUUID = [[KeychainManager sharedManager] getValueForKey:@"listUUID"];
     self.pfObject= [PFObject objectWithClassName:@"Item"];
     // validations

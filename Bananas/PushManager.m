@@ -9,8 +9,16 @@
 #import "PushManager.h"
 
 static NSMutableSet * messagesIRecentlyPushed = nil;
+static int num_sent=0;
+
+static int threshold=3;
 
 @implementation PushManager
+
++ (void)clearCount
+{
+    num_sent=0;
+}
 
 + (BOOL)isMessageISentRecently:(NSString *)pushMessage
 {
@@ -29,6 +37,8 @@ static NSMutableSet * messagesIRecentlyPushed = nil;
 
 + (void)sendPushMessage:(NSString*) pushMessage forQuery:(NSDictionary*) queryDictionary
 {
+    num_sent++;
+    if (num_sent>threshold) return;
     if (!messagesIRecentlyPushed) messagesIRecentlyPushed=[NSMutableSet set];
     [messagesIRecentlyPushed addObject:pushMessage];
     NSString * key = queryDictionary.allKeys.firstObject;

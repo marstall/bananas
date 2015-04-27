@@ -38,8 +38,8 @@
     self.listViewController = [[ListViewController alloc] init];
     
     UINavigationController * navigationController = [[UINavigationController alloc] initWithRootViewController:self.listViewController];
-    [navigationController setToolbarHidden:YES];
-
+    [navigationController setToolbarHidden:NO];
+    [navigationController setNavigationBarHidden:NO];
     
     self.window.rootViewController = navigationController;
  
@@ -104,12 +104,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self.listViewController.textField resignFirstResponder];
 
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    if (![backend startSharing]) notify(kPerformSyncNotification);;
+    self.listViewController.shouldShowDoneItems=false;
+    if (![backend startSharing]) notify(kPerformSyncNotification);
 
     [backend resetBadge];
     
@@ -118,6 +120,11 @@
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     DDLogVerbose(@"#display currentInstallation's listUUID is %@",makeUUIDTag(currentInstallation[@"listUUID"]));
+    self.listViewController.cellBeingEdited=nil;
+
+    [PushManager clearCount];
+    
+    [backend event:LIFECYCLE_LAUNCH];
 
 }
 

@@ -29,6 +29,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 
 static NSString * const kPerformSyncNotification = @"kPerformSyncNotifcation";
 static NSString * const kRefreshListUI = @"kRefreshListUI";
+static NSString * const kPerformDoSetToolBarItems = @"kPerformDoSetToolBarItems";
+
 
 #define DEBUG_LISTUUID 1
 
@@ -85,6 +87,22 @@ alpha:1.0]
  */
 
 #define ITEM_ADD @"item_added"
+#define ITEM_EDIT @"item_edited"
+#define ITEM_DELETE @"item_deleted"
+#define ITEM_DONE @"item_marked_as_done"
+#define ITEM_UNDONE @"item_marked_as_undone"
+
+#define CONNNECTING_INVITE_ISSUED @"connecting_invite_issued"
+#define CONNECTING_FAILED_PEER_SEARCH @"connecting_failed_peer_search"
+#define CONNECTING_INVITE_ACCEPTED @"connecting_invite_accepted"
+#define CONNECTING_DISCONNECT @"connecting_disconnect"
+#define SYNC @"sync"
+#define PUSH_SENT @"push_sent"
+#define PUSH_RECEIVED @"push_received"
+#define LIFECYCLE_LAUNCH @"lifecycle_launch"
+#define CLICK @"click"
+
 #define ITEM_TEXT @"item_text"
+#define BUTTON_TEXT @"button_text"
 
 
