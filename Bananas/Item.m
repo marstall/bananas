@@ -83,11 +83,22 @@
 - (void) mergeWith:(PFObject *) _pfObject
 {
     self.pfObject = _pfObject;
-//    NSString * text = [self valueForKey:@"text"];
+    
+    NSString * remoteText = [self.pfObject valueForKey:@"text"];
+    NSString * selfText = [self valueForKey:@"text"];
+
     NSString * remoteStatus = [self.pfObject valueForKey:@"status"];
     NSString * selfStatus = [self valueForKey:@"status"];
-    if ([remoteStatus isEqualToString:selfStatus]) return;
-    [self setValue: remoteStatus forKey:@"status"];
+
+    if (![remoteStatus isEqualToString:selfStatus])
+    {
+        [self setValue: remoteStatus forKey:@"status"];
+        [self setValue:[NSDate date] forKey:@"status_changed_at"];
+    }
+    if (![remoteText isEqualToString:selfText])
+    {
+        [self setValue: remoteText forKey:@"text"];
+    }
 }
 
 + (void) remoteFindAllInList:(NSString *) listUUID  withBlock:(void (^)(NSArray*,NSError *))block // show active first, then inactive
@@ -97,7 +108,9 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Item"];
     [query whereKey:@"listUUID" equalTo:listUUID];
     [query orderByAscending:@"status"];
-    query.limit=250;
+    [query addAscendingOrder:@"position"];
+    [query addDescendingOrder:@"status_changed_at"];
+    query.limit=150;
     [query findObjectsInBackgroundWithBlock:block];
 }
 
@@ -142,6 +155,15 @@
 
 -(void)willSave
 {
+    NSDate* now = [NSDate date];
+    if (![self valueForKey:@"created_at"])
+    {
+        [self setValue:now forKey:@"created_at"];
+    }
+    if (![self valueForKey:@"status_changed_at"])
+    {
+        [self setValue:now forKey:@"status_changed_at"];
+    }
     static int cnt =0;
     DDLogVerbose(@"Item willSave ...");
     NSArray * allKeys = [[self changedValues] allKeys];
@@ -177,7 +199,7 @@
             }
             else
             {
-                pushMessage=[NSString stringWithFormat:@"%@ still needed.",textString];
+                pushMessage=[NSString stringWithFormat:@"%@ added to list.",textString];
             }
         }
         if (self.shouldUpdateRemoteCopy) // don't send push for an update to the object that was triggered by a remote sync
@@ -188,6 +210,8 @@
             [self.pfObject setObject:[self valueForKey:@"text"]        forKey:@"text"];
             [self.pfObject setObject:[self valueForKey:@"itemUUID"]    forKey:@"itemUUID"];
             [self.pfObject setObject:[self valueForKey:@"status"]      forKey:@"status"];
+            [self.pfObject setObject:[self valueForKey:@"created_at"]      forKey:@"created_at"];
+            [self.pfObject setObject:[self valueForKey:@"status_changed_at"]      forKey:@"status_changed_at"];
             [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
              {
                //  NSString * cloudId = self.pfObject.objectId;

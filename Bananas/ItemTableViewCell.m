@@ -64,6 +64,7 @@
             Item * item = (Item *)[controller.items objectAtIndex:ind];
             NSString * status = [item valueForKey:@"status"];
             NSString * text =  [item valueForKey:@"text"];
+//            text= [[NSString alloc] initWithFormat:@"%@ (%@/%@/%@)",text,position,created_at,status_changed_at];
             if (item.isNewOrChanged)
             {
                 self.backgroundColor=UIColorFromRGB(0xffffcc);

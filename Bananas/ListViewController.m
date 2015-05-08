@@ -32,6 +32,12 @@
     [self.tableView reloadData];
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    observe(self, @selector(keyboardShow:), UIKeyboardWillShowNotification);
+    observe(self, @selector(keyboardHide:), UIKeyboardWillHideNotification);
+}
 
 - (instancetype)init
 {
@@ -77,7 +83,7 @@
     else
     {
         connectionButton = [[UIBarButtonItem alloc]
-                            initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
+                            initWithTitle:@"connect" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
                                          ];
     }
     UIBarButtonItem *syncButton =  [[UIBarButtonItem alloc]
@@ -207,6 +213,7 @@
     return YES;
 }
 
+
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
 {
     // find the position value of previous item
@@ -244,6 +251,11 @@
     [self.tableView reloadData];
 }
 
+- (NSIndexPath*)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = indexPath.row;
@@ -253,6 +265,8 @@
         [self.textField becomeFirstResponder];
         self.textField.superview.backgroundColor=[UIColor whiteColor];
         self.cellBeingEdited=[self.tableView cellForRowAtIndexPath:indexPath];
+        //        [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop
+
         return;
     }
     if (indexPath.row>=self.items.count) return;
@@ -264,11 +278,66 @@
          newStatus = @"active";
      }
     [item setValue:newStatus forKey:@"status"];
+    [item setValue:[NSDate date] forKey:@"status_changed_at"];
+
     item.shouldSendPush=true;
     item.shouldUpdateRemoteCopy=YES;
     [CoreDataManager save];
     [self.tableView reloadData];
 //    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
+{
+    self.textField = textField;
+ /*   CGRect rect = [textField frame];
+    CGRect absRect = [self.tableView convertRect:rect fromView:self.cellBeingEdited.contentView];
+    absRect.origin.x=0;
+    absRect.origin.y+=self.cellBeingEdited.bounds.size.height;
+    [[self tableView] setContentOffset:absRect.origin];*/
+    return YES;
+}
+/*
+ height of window is 568
+ height of viewable area is 568
+ height of scrollable area is either greater than, equal to or less than 568. can be any value.
+ 
+ top of cell is x
+ should set x to around 150.
+ if x=175, set x = x- (x-150); # x is 150
+ if x=125 set x = x- (x-150) @ x is 150
+ 
+*/
+
+// scroll text field so it is 250 px from the top
+- (void)keyboardShow: (NSNotification*) n
+{
+    NSDictionary* d = [n userInfo];
+    CGRect keyboardRect = [d[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    keyboardRect = [[self tableView] convertRect:keyboardRect fromView:nil];
+    int topOfKeyboard=keyboardRect.origin.y;
+    int desiredHeightOfTextField = topOfKeyboard/2;
+    CGRect textFieldRectOriginal = [self.textField frame];
+    CGRect textFieldRect;
+    if (textFieldRectOriginal.origin.y<16) // hack for new-item entry field
+    {
+        textFieldRect = [self.tableView convertRect:textFieldRectOriginal fromView:self.cellBeingEdited.contentView];
+    }
+    else
+    {
+        textFieldRect = textFieldRectOriginal;
+    }
+    int topOfTextFieldYPosition = textFieldRect.origin.y;
+    
+    int amountToOffsetY= topOfTextFieldYPosition-desiredHeightOfTextField;
+    CGPoint offset = CGPointMake(0, amountToOffsetY);
+    if (amountToOffsetY>0) [self.tableView setContentOffset:offset];
+}
+
+
+- (void)keyboardHide: (NSNotification*) n
+{
+    
 }
 
 
@@ -327,7 +396,6 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    DDLogVerbose(@"finished editing with '%@'",textField.text);
     notify(kRefreshListUI);
 }
 
@@ -370,6 +438,8 @@
         else
         {
             [item setValue:textField.text forKey:@"text"];
+            item.shouldUpdateRemoteCopy=YES;
+            item.shouldSendPush=YES;
             [backend event:ITEM_EDIT dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
 
         }

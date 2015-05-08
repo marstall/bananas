@@ -43,6 +43,11 @@
     
     self.window.rootViewController = navigationController;
  
+
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [NSException raise:NSGenericException format:@"Everything is ok. This is just a test crash."];
+//    });
+    
     return YES;
 }
 
@@ -84,11 +89,23 @@
         DDLogInfo(@"#display ignored push because it's one that i sent ... : %@",pushMessage);
         return;
     }
+    
+    // there was a case where this data got corrupted/erased - so if we are receiving push data, reaffirm that we are connected
+    UserDefaultsManager * um = [UserDefaultsManager sharedManager];
+    if (![um getBooleanForKey:@"connected" ])
+    {
+        [um setBoolean:YES forKey:@"connected"];
+    }
+    if (![um getValueForKey:@"peerIAmConnectedTo" ])
+    {
+        [um setValue:@"[unknown]" forKey:@"peerIAmConnectedTo"];
+    }
+
 
     DDLogInfo(@"#display push valid, should sync now: %@",pushMessage);
 //    [self.listViewController sync:self];
     notify(kPerformSyncNotification);
-    handler;
+    [handler invoke];
 }
 
 
@@ -120,7 +137,7 @@
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     DDLogVerbose(@"#display currentInstallation's listUUID is %@",makeUUIDTag(currentInstallation[@"listUUID"]));
-    self.listViewController.cellBeingEdited=nil;
+//    self.listViewController.cellBeingEdited=nil;
 
     [PushManager clearCount];
     

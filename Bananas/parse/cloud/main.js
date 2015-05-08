@@ -19,6 +19,8 @@ Parse.Cloud.beforeSave("Item", function(request, response) {
                                           if (existingObject) {
                                           // Update existing object
                                           existingObject.set("status", request.object.get("status"));
+                                          existingObject.set("text", request.object.get("text"));
+                                          existingObject.set("status_changed_at", request.object.get("status_changed_at"));
                                           return existingObject.save();
                                           } else {
                                           // Pass a flag that this is not an existing object

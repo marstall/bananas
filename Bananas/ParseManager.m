@@ -23,7 +23,7 @@
 - (void)initParseWithLaunchOptions:(NSDictionary*)launchOptions andApplication:(UIApplication * )application
 {
     [Parse enableLocalDatastore];
-//    [ParseCrashReporting ena];
+    [ParseCrashReporting enable];
 
     // Initialize Parse.
     [Parse setApplicationId:PARSE_APPLICATION_ID

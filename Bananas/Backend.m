@@ -42,69 +42,66 @@
     dispatch_async(self.queue, ^{
         void (^block)(NSArray * pfObjects, NSError * error) ;
         NSString * listUUID = [KeychainManager.sharedManager getValueForKey:@"listUUID"];
-//        if ([self isSharing])
-        {
-            DDLogVerbose(@"syncing ...");
-            // get all values from remote store
-            // loop through them
-            // for each, find local match via itemUUID
-            // if a match is found, perform merge logic
-            // if no match is found, add row
+        DDLogVerbose(@"syncing ...");
+        // get all values from remote store
+        // loop through them
+        // for each, find local match via itemUUID
+        // if a match is found, perform merge logic
+        // if no match is found, add row
 
-            block = ^(NSArray * pfObjects, NSError * error) { // declare callback block
-                if (error) return;
-                if (!pfObjects) return;
-                NSMutableArray * items = Item.allItems;
-                for (Item * item in items)
+        block = ^(NSArray * pfObjects, NSError * error) { // declare callback block
+            if (error) return;
+            if (!pfObjects) return;
+            NSMutableArray * items = Item.allItems;
+            for (Item * item in items)
+            {
+                item.foundRemoteVersion=NO;
+            } // local objects guilty until proven innocent
+            
+            for (PFObject * pfObject in pfObjects) // for each remote object
+            {
+                BOOL matchFound = NO;
+                for (Item * item in items) // for each local object
                 {
-                    item.foundRemoteVersion=NO;
-                } // local objects guilty until proven innocent
-                
-                for (PFObject * pfObject in pfObjects) // for each remote object
-                {
-                    BOOL matchFound = NO;
-                    for (Item * item in items) // for each local object
+                    // update existing if it is a match
+                    if ([[pfObject valueForKey:@"itemUUID"] isEqualToString: [item valueForKey:@"itemUUID"]])
                     {
-                        // update existing if it is a match
-                        if ([[pfObject valueForKey:@"itemUUID"] isEqualToString: [item valueForKey:@"itemUUID"]])
-                        {
-                            [item mergeWith: pfObject];
-                            matchFound = YES;
-                            item.foundRemoteVersion=YES;
-                        }
-                    }
-                    if (!matchFound) // if no match for remote object create linked local object
-                    {
-                        // create new
-                        Item *item = [Item create:[pfObject valueForKey:@"text"] withUUID:[pfObject valueForKey:@"itemUUID"]];
-                        [item setValue:[pfObject valueForKey:@"status"] forKey:@"status"];
-                        item.shouldUpdateRemoteCopy=NO;
+                        [item mergeWith: pfObject];
+                        matchFound = YES;
                         item.foundRemoteVersion=YES;
-                        [items addObject:item];
-                        [CoreDataManager save];
                     }
                 }
-                
-                // delete local objects not found in remote repo
-                NSMutableArray * itemsToRemove = [NSMutableArray new];
-                for (Item * item in items)
+                if (!matchFound) // if no match for remote object create linked local object
                 {
-                    if (!item.foundRemoteVersion)
-                    {
-                        [itemsToRemove addObject:item];
-                    }
+                    // create new
+                    Item *item = [Item create:[pfObject valueForKey:@"text"] withUUID:[pfObject valueForKey:@"itemUUID"]];
+                    [item setValue:[pfObject valueForKey:@"status"] forKey:@"status"];
+                    item.shouldUpdateRemoteCopy=NO;
+                    item.foundRemoteVersion=YES;
+                    [items addObject:item];
+                    [CoreDataManager save];
                 }
-                for (Item * item in itemsToRemove)
+            }
+            
+            // delete local objects not found in remote repo
+            NSMutableArray * itemsToRemove = [NSMutableArray new];
+            for (Item * item in items)
+            {
+                if (!item.foundRemoteVersion)
                 {
-                    [items removeObject:item];
-                    [CoreDataManager removeObject:item];
+                    [itemsToRemove addObject:item];
                 }
-                [CoreDataManager save];
-                notify(kRefreshListUI);
-                DDLogVerbose(@"sync complete.");
-                [passed_block invoke];
-            };
-        }
+            }
+            for (Item * item in itemsToRemove)
+            {
+                [items removeObject:item];
+                [CoreDataManager removeObject:item];
+            }
+            [CoreDataManager save];
+            notify(kRefreshListUI);
+            DDLogVerbose(@"sync complete.");
+            [passed_block invoke];
+        };
    
         if (showDoneItems) [Item remoteFindAllInList:listUUID withBlock:block];
         else [Item remoteFindAllInListExceptStale:listUUID withBlock:block];
@@ -170,7 +167,7 @@
 {
     PFUser * user = [PFUser currentUser];
     BOOL connected = [[UserDefaultsManager sharedManager] getBooleanForKey:@"connected"];
-    return user&&connected;
+    return user&&(connected);
 }
 
 - (void)resetBadge

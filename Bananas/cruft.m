@@ -75,3 +75,13 @@ setting title bar colors:
  recognizer.numberOfTouchesRequired = 1;
  [self addGestureRecognizer:recognizer];
  */
+
+/*    CGRect tableViewBounds = [[self tableView] bounds];
+ CGRect tableViewFrame = [[self tableView] frame];
+ CGRect viewFrame = [[self view] frame];
+ CGRect viewBounds = [[self view] bounds];
+ CGRect cellBeingEditedFrameRect = self.cellBeingEdited.frame;
+ CGRect cellBeingEditedBoundsRect = self.cellBeingEdited.bounds;
+ CGRect superViewFrame = self.view.superview.frame;
+ CGRect superViewBounds = self.view.superview.bounds;
+*/

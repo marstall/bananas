@@ -10,6 +10,7 @@
 @import UIKit;
 
 #import <Parse/Parse.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
 
 static NSString * const PARSE_APPLICATION_ID=@"sWeVUikcOz1sL2EJIfgMnmAgwpF4Zq8cWW8CVZg1";
 static NSString * const PARSE_CLIENT_KEY=@"jIw9gPqHIiNry3NB0d70qf2EqHvxchWUxwXlIU5H";
