@@ -40,22 +40,42 @@
 		EA8555551AF576BF0034146E /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555521AF576BF0034146E /* Accounts.framework */; };
 		EA8555561AF576BF0034146E /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555531AF576BF0034146E /* libstdc++.6.dylib */; };
 		EA8555571AF576BF0034146E /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555541AF576BF0034146E /* Social.framework */; };
-		EA8AA5F91AD1FA4000DBF39F /* analytics.txt in Resources */ = {isa = PBXBuildFile; fileRef = EA8AA5F81AD1FA4000DBF39F /* analytics.txt */; };
+		EA8957E91B0FBB2400033152 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E61B0FBB2400033152 /* Bolts.framework */; };
+		EA8957EA1B0FBB2400033152 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E61B0FBB2400033152 /* Bolts.framework */; };
+		EA8957EB1B0FBB2400033152 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E71B0FBB2400033152 /* ParseCrashReporting.framework */; };
+		EA8957EC1B0FBB2400033152 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E71B0FBB2400033152 /* ParseCrashReporting.framework */; };
+		EA8957ED1B0FBB2400033152 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E81B0FBB2400033152 /* Parse.framework */; };
+		EA8957EE1B0FBB2400033152 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8957E81B0FBB2400033152 /* Parse.framework */; };
+		EA9AB4681B1632CC0008F06F /* libPods-CocoaLumberjack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9AB4661B1632CC0008F06F /* libPods-CocoaLumberjack.a */; };
+		EA9AB4691B1632CC0008F06F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9AB4671B1632CC0008F06F /* libPods.a */; };
 		EAB923281A433F4200793176 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB923271A433F4200793176 /* main.m */; };
 		EAB9232B1A433F4200793176 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB9232A1A433F4200793176 /* AppDelegate.m */; };
 		EAB9232E1A433F4200793176 /* Bananas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAB9232C1A433F4200793176 /* Bananas.xcdatamodeld */; };
 		EAB923361A433F4200793176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB923351A433F4200793176 /* Images.xcassets */; };
-		EAB923451A433F4200793176 /* BananasTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB923441A433F4200793176 /* BananasTests.m */; };
 		EAB923521A4348C000793176 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAB923511A4348C000793176 /* ListViewController.m */; };
-		EAC7F6021AFD40CB001C0209 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC7F5FF1AFD40CB001C0209 /* Bolts.framework */; };
-		EAC7F6031AFD40CB001C0209 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC7F6001AFD40CB001C0209 /* Parse.framework */; };
-		EAC7F6041AFD40CB001C0209 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC7F6011AFD40CB001C0209 /* ParseCrashReporting.framework */; };
 		EAD569B71A4F4C7500A8D128 /* KeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD569B61A4F4C7500A8D128 /* KeychainManager.m */; };
 		EAD569BA1A51C9AA00A8D128 /* UserDefaultsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD569B91A51C9AA00A8D128 /* UserDefaultsManager.m */; };
 		EAE0CB3D1A531F22000C3FF3 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = EAE0CB3C1A531F22000C3FF3 /* Podfile */; };
+		EAE516E91B0FBE3800D2E242 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA41A4E03B9008DDD8B /* AudioToolbox.framework */; };
+		EAE516EA1B0FBE3800D2E242 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA51A4E03B9008DDD8B /* CFNetwork.framework */; };
+		EAE516EB1B0FBE3800D2E242 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA61A4E03B9008DDD8B /* CoreGraphics.framework */; };
+		EAE516EC1B0FBE3800D2E242 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA71A4E03B9008DDD8B /* CoreLocation.framework */; };
+		EAE516ED1B0FBE3800D2E242 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA81A4E03B9008DDD8B /* libsqlite3.dylib */; };
+		EAE516EE1B0FBE3800D2E242 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DA91A4E03B9008DDD8B /* libz.dylib */; };
+		EAE516EF1B0FBE3800D2E242 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DAA1A4E03B9008DDD8B /* MobileCoreServices.framework */; };
+		EAE516F01B0FBE3800D2E242 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DAB1A4E03B9008DDD8B /* QuartzCore.framework */; };
+		EAE516F11B0FBE3800D2E242 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DAC1A4E03B9008DDD8B /* Security.framework */; };
+		EAE516F21B0FBE3800D2E242 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DAD1A4E03B9008DDD8B /* StoreKit.framework */; };
+		EAE516F31B0FBE3800D2E242 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4C5DAE1A4E03B9008DDD8B /* SystemConfiguration.framework */; };
+		EAE516F41B0FBE6100D2E242 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555521AF576BF0034146E /* Accounts.framework */; };
+		EAE516F51B0FBE6100D2E242 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555541AF576BF0034146E /* Social.framework */; };
+		EAE516F61B0FC07900D2E242 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EA8555531AF576BF0034146E /* libstdc++.6.dylib */; };
+		EAE516FE1B0FC3BC00D2E242 /* ItemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE516FD1B0FC3BC00D2E242 /* ItemTests.m */; };
+		EAE517001B13837F00D2E242 /* SyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE516FF1B13837F00D2E242 /* SyncTests.m */; };
 		EAE563261A5B18750066C762 /* PushManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE563251A5B18750066C762 /* PushManager.m */; };
 		EAE563291A5B3DDC0066C762 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE563281A5B3DDC0066C762 /* ItemTableViewCell.m */; };
 		EAE5632B1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAE5632A1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib */; };
+		EAE924D81B16854000AD662F /* TEST.TXT in Resources */ = {isa = PBXBuildFile; fileRef = EAE924D71B16854000AD662F /* TEST.TXT */; };
 		EAEEA6391A44C80700AD22E9 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEEA6381A44C80700AD22E9 /* CoreDataManager.m */; };
 /* End PBXBuildFile section */
 
@@ -116,8 +136,12 @@
 		EA8555521AF576BF0034146E /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		EA8555531AF576BF0034146E /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		EA8555541AF576BF0034146E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		EA8AA5F81AD1FA4000DBF39F /* analytics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = analytics.txt; sourceTree = "<group>"; };
+		EA8957E61B0FBB2400033152 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		EA8957E71B0FBB2400033152 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		EA8957E81B0FBB2400033152 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		EA8C3E541A532AC400183663 /* Bananas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bananas.h; sourceTree = "<group>"; };
+		EA9AB4661B1632CC0008F06F /* libPods-CocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CocoaLumberjack.a"; path = "Pods/build/Debug-iphoneos/libPods-CocoaLumberjack.a"; sourceTree = "<group>"; };
+		EA9AB4671B1632CC0008F06F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		EAB923221A433F4200793176 /* Bananas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bananas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB923261A433F4200793176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB923271A433F4200793176 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -127,22 +151,21 @@
 		EAB923351A433F4200793176 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EAB9233E1A433F4200793176 /* BananasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BananasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB923431A433F4200793176 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EAB923441A433F4200793176 /* BananasTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BananasTests.m; sourceTree = "<group>"; };
 		EAB923501A4348C000793176 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
 		EAB923511A4348C000793176 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
-		EAC7F5FF1AFD40CB001C0209 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		EAC7F6001AFD40CB001C0209 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		EAC7F6011AFD40CB001C0209 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		EAD569B51A4F4C7500A8D128 /* KeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainManager.h; sourceTree = "<group>"; };
 		EAD569B61A4F4C7500A8D128 /* KeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainManager.m; sourceTree = "<group>"; };
 		EAD569B81A51C9AA00A8D128 /* UserDefaultsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsManager.h; sourceTree = "<group>"; };
 		EAD569B91A51C9AA00A8D128 /* UserDefaultsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsManager.m; sourceTree = "<group>"; };
 		EAE0CB3C1A531F22000C3FF3 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		EAE516FD1B0FC3BC00D2E242 /* ItemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTests.m; sourceTree = "<group>"; };
+		EAE516FF1B13837F00D2E242 /* SyncTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncTests.m; sourceTree = "<group>"; };
 		EAE563241A5B18750066C762 /* PushManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushManager.h; sourceTree = "<group>"; };
 		EAE563251A5B18750066C762 /* PushManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushManager.m; sourceTree = "<group>"; };
 		EAE563271A5B3DDC0066C762 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
 		EAE563281A5B3DDC0066C762 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		EAE5632A1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemTableViewCellEditMode.xib; sourceTree = "<group>"; };
+		EAE924D71B16854000AD662F /* TEST.TXT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TEST.TXT; sourceTree = "<group>"; };
 		EAEEA6371A44C80700AD22E9 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
 		EAEEA6381A44C80700AD22E9 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,13 +176,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA8555551AF576BF0034146E /* Accounts.framework in Frameworks */,
-				EAC7F6041AFD40CB001C0209 /* ParseCrashReporting.framework in Frameworks */,
-				EA8555561AF576BF0034146E /* libstdc++.6.dylib in Frameworks */,
 				EA8555571AF576BF0034146E /* Social.framework in Frameworks */,
 				EA4C5DAF1A4E03B9008DDD8B /* AudioToolbox.framework in Frameworks */,
 				EA4C5DB01A4E03B9008DDD8B /* CFNetwork.framework in Frameworks */,
 				EA4C5DB11A4E03B9008DDD8B /* CoreGraphics.framework in Frameworks */,
-				EAC7F6031AFD40CB001C0209 /* Parse.framework in Frameworks */,
 				EA4C5DB21A4E03B9008DDD8B /* CoreLocation.framework in Frameworks */,
 				EA4C5DB31A4E03B9008DDD8B /* libsqlite3.dylib in Frameworks */,
 				EA4C5DB41A4E03B9008DDD8B /* libz.dylib in Frameworks */,
@@ -168,8 +188,11 @@
 				EA4C5DB71A4E03B9008DDD8B /* Security.framework in Frameworks */,
 				EA4C5DB81A4E03B9008DDD8B /* StoreKit.framework in Frameworks */,
 				EA4C5DB91A4E03B9008DDD8B /* SystemConfiguration.framework in Frameworks */,
+				EA8555561AF576BF0034146E /* libstdc++.6.dylib in Frameworks */,
+				EA8957EB1B0FBB2400033152 /* ParseCrashReporting.framework in Frameworks */,
+				EA8957ED1B0FBB2400033152 /* Parse.framework in Frameworks */,
 				C5A202A3A9D7598BC0599F5D /* libPods.a in Frameworks */,
-				EAC7F6021AFD40CB001C0209 /* Bolts.framework in Frameworks */,
+				EA8957E91B0FBB2400033152 /* Bolts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +200,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA9AB4681B1632CC0008F06F /* libPods-CocoaLumberjack.a in Frameworks */,
+				EA9AB4691B1632CC0008F06F /* libPods.a in Frameworks */,
+				EAE516F61B0FC07900D2E242 /* libstdc++.6.dylib in Frameworks */,
+				EAE516F41B0FBE6100D2E242 /* Accounts.framework in Frameworks */,
+				EAE516F51B0FBE6100D2E242 /* Social.framework in Frameworks */,
+				EAE516E91B0FBE3800D2E242 /* AudioToolbox.framework in Frameworks */,
+				EAE516EA1B0FBE3800D2E242 /* CFNetwork.framework in Frameworks */,
+				EAE516EB1B0FBE3800D2E242 /* CoreGraphics.framework in Frameworks */,
+				EAE516EC1B0FBE3800D2E242 /* CoreLocation.framework in Frameworks */,
+				EAE516ED1B0FBE3800D2E242 /* libsqlite3.dylib in Frameworks */,
+				EAE516EE1B0FBE3800D2E242 /* libz.dylib in Frameworks */,
+				EAE516EF1B0FBE3800D2E242 /* MobileCoreServices.framework in Frameworks */,
+				EAE516F01B0FBE3800D2E242 /* QuartzCore.framework in Frameworks */,
+				EAE516F11B0FBE3800D2E242 /* Security.framework in Frameworks */,
+				EAE516F21B0FBE3800D2E242 /* StoreKit.framework in Frameworks */,
+				EAE516F31B0FBE3800D2E242 /* SystemConfiguration.framework in Frameworks */,
+				EA8957EA1B0FBB2400033152 /* Bolts.framework in Frameworks */,
+				EA8957EE1B0FBB2400033152 /* Parse.framework in Frameworks */,
+				EA8957EC1B0FBB2400033152 /* ParseCrashReporting.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,10 +271,10 @@
 		EAB923191A433F4200793176 = {
 			isa = PBXGroup;
 			children = (
-				EAC7F5FF1AFD40CB001C0209 /* Bolts.framework */,
-				EAC7F6001AFD40CB001C0209 /* Parse.framework */,
-				EAC7F6011AFD40CB001C0209 /* ParseCrashReporting.framework */,
-				EA8AA5F81AD1FA4000DBF39F /* analytics.txt */,
+				EAE924D71B16854000AD662F /* TEST.TXT */,
+				EA8957E61B0FBB2400033152 /* Bolts.framework */,
+				EA8957E71B0FBB2400033152 /* ParseCrashReporting.framework */,
+				EA8957E81B0FBB2400033152 /* Parse.framework */,
 				EA6CDF7B1ACC802700EB1999 /* Default-568h@2x.png */,
 				EAE0CB3C1A531F22000C3FF3 /* Podfile */,
 				EA4C5DA41A4E03B9008DDD8B /* AudioToolbox.framework */,
@@ -327,7 +369,8 @@
 		EAB923411A433F4200793176 /* BananasTests */ = {
 			isa = PBXGroup;
 			children = (
-				EAB923441A433F4200793176 /* BananasTests.m */,
+				EAE516FF1B13837F00D2E242 /* SyncTests.m */,
+				EAE516FD1B0FC3BC00D2E242 /* ItemTests.m */,
 				EAB923421A433F4200793176 /* Supporting Files */,
 			);
 			path = BananasTests;
@@ -344,6 +387,8 @@
 		FCD05DB32785113D3BC7956F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA9AB4661B1632CC0008F06F /* libPods-CocoaLumberjack.a */,
+				EA9AB4671B1632CC0008F06F /* libPods.a */,
 				EA8555521AF576BF0034146E /* Accounts.framework */,
 				EA8555531AF576BF0034146E /* libstdc++.6.dylib */,
 				EA8555541AF576BF0034146E /* Social.framework */,
@@ -438,8 +483,8 @@
 			files = (
 				EAE5632B1A5B4EC90066C762 /* ItemTableViewCellEditMode.xib in Resources */,
 				EA4C5DC91A4E420E008DDD8B /* global.json in Resources */,
+				EAE924D81B16854000AD662F /* TEST.TXT in Resources */,
 				EA6CDF7C1ACC802800EB1999 /* Default-568h@2x.png in Resources */,
-				EA8AA5F91AD1FA4000DBF39F /* analytics.txt in Resources */,
 				EA4C5DCA1A4E420E008DDD8B /* index.html in Resources */,
 				EA43BBA01A54C3AB0027B717 /* SettingsController.xib in Resources */,
 				EAB923361A433F4200793176 /* Images.xcassets in Resources */,
@@ -537,7 +582,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB923451A433F4200793176 /* BananasTests.m in Sources */,
+				EAE517001B13837F00D2E242 /* SyncTests.m in Sources */,
+				EAE516FE1B0FC3BC00D2E242 /* ItemTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,11 +720,13 @@
 		};
 		EAB9234C1A433F4200793176 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 763995E9006D925ABF3924DC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -686,6 +734,10 @@
 				);
 				INFOPLIST_FILE = BananasTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bananas.app/Bananas";
 			};
@@ -693,14 +745,20 @@
 		};
 		EAB9234D1A433F4200793176 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FDC7EDB40D9B8C521369B0A /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BananasTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bananas.app/Bananas";
 			};

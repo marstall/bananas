@@ -101,6 +101,15 @@
     }
 }
 
++ (BOOL) atLeastOneDoneItem
+{
+    for (Item * item in [Item allItems])
+    {
+        if ([[item valueForKey:@"status"] isEqualToString:@"done"]) return YES;
+    }
+    return NO;
+}
+
 + (void) remoteFindAllInList:(NSString *) listUUID  withBlock:(void (^)(NSArray*,NSError *))block // show active first, then inactive
 {
     if (![PFUser currentUser]) return;
@@ -216,7 +225,7 @@
              {
                //  NSString * cloudId = self.pfObject.objectId;
                //  [self setValue: cloudId forKey:@"cloudId"];
-                 if (pushMessage && self.shouldSendPush && [backend isSharing])
+                 if (pushMessage && self.shouldSendPush && [__backend isSharing])
                  {
                      [PushManager sendPushMessage:pushMessage forQuery:@{@"listUUID":listUUID}];
                      NSLog(@"#display sending push message '%@' ...",pushMessage);

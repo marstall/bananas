@@ -19,6 +19,8 @@
     @property BOOL shouldUpdateRemoteCopy;
 
     + (NSMutableArray *)allItems;
+    + (BOOL) atLeastOneDoneItem;
+
     + (void)deleteAll;
 //    + (void)setAllItems:(NSMutableArray *) __allItems;
 

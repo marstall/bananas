@@ -25,7 +25,7 @@
     {
         MCPeerID* peer = [[session connectedPeers] firstObject];
         NSString * displayName = [peer displayName];
-        NSString * listUUID = [backend listUUID];
+        NSString * listUUID = [__backend listUUID];
         if (self.didInitiateMultipeerSession) // only initiator sends peerID
         {
             DDLogVerbose(@"#display successfully initiated connection (with my listUUID %@)",makeUUIDTag(listUUID));
@@ -38,7 +38,7 @@
         else
         {
             DDLogVerbose(@"#display successfully accepted connection with %@",displayName);
-            [backend event:CONNECTING_INVITE_ACCEPTED];
+            [__backend event:CONNECTING_INVITE_ACCEPTED];
         }
         [[UserDefaultsManager sharedManager] setBoolean:YES forKey:@"connected"];
         [[UserDefaultsManager sharedManager] setValue:displayName forKey:@"peerIAmConnectedTo"];
@@ -73,8 +73,8 @@
         NSString * uuidString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         DDLogInfo(@"#display received new listUUID %@ via multipeer",makeUUIDTag(uuidString));
 
-        [backend setListUUID:uuidString];
-        [backend startSharing];
+        [__backend setListUUID:uuidString];
+        [__backend startSharing];
     });
 
 }

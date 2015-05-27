@@ -1,0 +1,15 @@
+MANUAL TESTING
+
+1. new build on external iphone (A)
+2. new build on ios7 iphone 4s emulator (B)
+3. disconnect A if necessary
+4. disconnect B if necessary
+5. add item "item" on A
+6. A issues invite to B
+7. B accepts invite
+8. verify that B has item "item"
+9. cross off item on B, verify that item is crossed off on A immediately
+10. uncross item on B.
+10. on B, rename "item" to "big item", verify that it changes on A
+11. on A, rename "big item" to "small item", verify that it changes on B after app relaunch on B
+12. on B, delete "small item" and verify that it is deleted on A

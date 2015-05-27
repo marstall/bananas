@@ -48,4 +48,22 @@ NSString * sha1(NSString * s)
         [ret appendFormat:@"%02x",buffer[i]];
     return ret;
 }
+/*
+NSString * enumerate_methods(NSObject * obj)
+{
+    int i=0;
+    unsigned int mc = 0;
+    Method * mlist = class_copyMethodList(object_getClass(obj), &mc);
+    NSString * str = [[NSString alloc] initWithFormat:@"%d methods", mc ];
+    for(i=0;i<mc;i++)
+    {
+        char* s = sel_getName(method_getName(mlist[i]));
+        NSString* _s = [[NSString alloc] initWithFormat:@" %s",s];
+        str = [str stringByAppendingString:_s];
+        NSLog(@"Method no #%d: %s", i, sel_getName(method_getName(mlist[i])));
+    }
+    return str;
+}
+
+*/
 

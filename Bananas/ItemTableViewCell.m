@@ -59,7 +59,7 @@
     {
         // retrieve the nth element of the items array, set the cell.textLabel.text to the element's text value
         NSInteger ind = indexPath.row;
-        if (ind<backend.allItems.count)
+        if (ind<__backend.allItems.count)
         {
             Item * item = (Item *)[controller.items objectAtIndex:ind];
             NSString * status = [item valueForKey:@"status"];

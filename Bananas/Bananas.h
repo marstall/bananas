@@ -23,6 +23,7 @@
 #import "MultipeerManager.h"
 #include "CommonCrypto/CommonDigest.h"
 #include "Backend.h"
+#import <objc/runtime.h>
 
 
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
@@ -49,42 +50,9 @@ green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
 blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
 alpha:1.0]
 
-#endif
 
-/*
- things to track:
- 
- - app launch
- 
- basic data to send:
- 
- - action
- lifecycle: (launch, minimize)
- items: (add, delete, move, mark as done,mark as not done)
- connecting: (invite issued, failed peer search, invite accepted, disconnect)
- sync: (sync)
- - data
- basic: (action category, time,device info, device name, device name connected to, listUUID, install date, any PID, list items w/statuses)
- lifecycle: ()
- items: (item name, status)
- connecting: (target device name)
- sync: (new items)
- 
- LIFECYCLE_LAUNCH
- LIFECYCLE_MINIMIZE
- ITEM_ADD
- ITEM_DELETE
- ITEM_MOVE
- ITEM_DONE
- ITEM_UNDONE
- CONNECTING_INVITE_ISSUED
- CONNECTING_FAILED_PEER_SEARCH
- CONNECTING_INVITE_ACCEPTED
- CONNECTING_DISCONNECT
- SYNC
- PUSH_SENT
- PUSH_RECEIVED
- */
+NSString * enumerate_methods(NSObject * obj);
+
 
 #define ITEM_ADD @"item_added"
 #define ITEM_EDIT @"item_edited"
@@ -105,4 +73,5 @@ alpha:1.0]
 #define ITEM_TEXT @"item_text"
 #define BUTTON_TEXT @"button_text"
 
+#endif
 

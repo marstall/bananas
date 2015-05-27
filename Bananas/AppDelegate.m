@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
-    backend = [[Backend alloc] initWithApplication:application andLaunchOptions:launchOptions];
+    __backend = [[Backend alloc] initWithApplication:application andLaunchOptions:launchOptions];
 
     self.logArray = [[NSMutableArray alloc] init];
     [DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -42,6 +42,10 @@
     [navigationController setNavigationBarHidden:NO];
     
     self.window.rootViewController = navigationController;
+    UserDefaultsManager * um = [UserDefaultsManager sharedManager];
+    NSString * peerIAmConnectedTo = [um getValueForKey:@"peerIAmConnectedTo" ];
+    NSString * connected = [um getValueForKey:@"peerIAmConnectedTo" ];
+    
  
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -55,7 +59,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [BananasParseManager.sharedManager updatePushDeviceToken:deviceToken];
-    [backend updateListUUIDOnParse];
+    [__backend updateListUUIDOnParse];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -82,27 +86,23 @@
 
     NSDictionary * aps = [userInfo valueForKey:@"aps"];
     NSString *pushMessage = [aps valueForKey:@"alert"];
-    DDLogInfo(@"#display received push... : %@",pushMessage);
+    DDLogInfo(@"received push... : %@",pushMessage);
 
     if ([PushManager isMessageISentRecently:pushMessage])
     {
-        DDLogInfo(@"#display ignored push because it's one that i sent ... : %@",pushMessage);
+        DDLogInfo(@"ignored push because it's one that i sent ... : %@",pushMessage);
         return;
     }
     
     // there was a case where this data got corrupted/erased - so if we are receiving push data, reaffirm that we are connected
     UserDefaultsManager * um = [UserDefaultsManager sharedManager];
-    if (![um getBooleanForKey:@"connected" ])
-    {
-        [um setBoolean:YES forKey:@"connected"];
-    }
+    [um setBoolean:YES forKey:@"connected"];
     if (![um getValueForKey:@"peerIAmConnectedTo" ])
     {
         [um setValue:@"[unknown]" forKey:@"peerIAmConnectedTo"];
     }
 
-
-    DDLogInfo(@"#display push valid, should sync now: %@",pushMessage);
+    DDLogInfo(@"push valid, should sync now: %@",pushMessage);
 //    [self.listViewController sync:self];
     notify(kPerformSyncNotification);
     [handler invoke];
@@ -128,11 +128,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     self.listViewController.shouldShowDoneItems=false;
-    if (![backend startSharing]) notify(kPerformSyncNotification);
+    if (![__backend startSharing]) notify(kPerformSyncNotification);
 
-    [backend resetBadge];
+    [__backend resetBadge];
     
-    [backend setupListUUID];
+    [__backend setupListUUID];
 //    [backend startSharing];
     
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
@@ -141,7 +141,7 @@
 
     [PushManager clearCount];
     
-    [backend event:LIFECYCLE_LAUNCH];
+    [__backend event:LIFECYCLE_LAUNCH];
 
 }
 

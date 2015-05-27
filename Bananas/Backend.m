@@ -15,6 +15,7 @@
     self = [super init];
     if (self)
     {
+        self.carumba = @"carumba!";
         BOOL __block initialized=NO;
         static dispatch_once_t predicate1;
         dispatch_once(&predicate1, ^(void){
@@ -36,6 +37,24 @@
 {
     [self syncWithDoneItems:showDoneItems AndBlock:nil];
 }
+- (IBAction)syncTest: (void (^)())passed_block
+{
+    DDLogVerbose(@"sync test");
+    [passed_block invoke];
+}
+
+- (void)basicBitch
+{
+    self.carumba=@"NO CARUMBA";
+    DDLogVerbose(@"basic bitch");
+}
+
+- (IBAction)async: (void (^)())block
+{
+    DDLogVerbose(@"async");
+    [block invoke];
+}
+
 
 - (IBAction)syncWithDoneItems:(BOOL)showDoneItems AndBlock: (void (^)())passed_block
 {
@@ -102,7 +121,7 @@
             DDLogVerbose(@"sync complete.");
             [passed_block invoke];
         };
-   
+        [passed_block invoke];
         if (showDoneItems) [Item remoteFindAllInList:listUUID withBlock:block];
         else [Item remoteFindAllInListExceptStale:listUUID withBlock:block];
     }); // dispatch_async
@@ -114,11 +133,11 @@
     {
         NSString * listUUID = [self resetListUUID];
         [[KeychainManager sharedManager] setValue:listUUID forKey:@"listUUID"];
-        DDLogVerbose(@"#display launched with new list %@",listUUID);
+//        DDLogVerbose(@"#display launched with new list %@",listUUID);
     }
     else
     {
-        DDLogVerbose(@"#display launched with existing list %@",[self listUUID]);
+//        DDLogVerbose(@"#display launched with existing list %@",[self listUUID]);
     }
 }
 

@@ -13,6 +13,7 @@
 @interface Backend : NSObject
 
 @property dispatch_queue_t queue;
+@property NSString * carumba;
 
 - (instancetype)initWithApplication:(UIApplication *)application andLaunchOptions:(NSDictionary*)launchOptions;
 
@@ -33,8 +34,14 @@
 - (void)event:(NSString *) name;
 - (void)event:(NSString *) name dimensions:(NSDictionary *)dimensions;
 
+- (IBAction)syncTest: (void (^)())passed_block;
+- (IBAction)async: (void (^)())block;
+
+- (void)basicBitch;
+
+
 
 - (void)resetBadge;
 @end
 
-Backend * backend;
+Backend * __backend;

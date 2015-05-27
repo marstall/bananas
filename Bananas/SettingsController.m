@@ -51,7 +51,7 @@
                                                 handler: ^(UIAlertAction * alertAction){
                                                     dispatch_async(dispatch_get_main_queue(), ^{
                 [self setupUUIDLabel];
-                [backend resetListUUID];
+                [__backend resetListUUID];
                 [[BananasParseManager sharedManager] setupParseUser];
                 notify(kRefreshListUI);
                 notify(kPerformSyncNotification);
@@ -92,7 +92,7 @@
     else
     {
         [self setupUUIDLabel];
-        [backend resetListUUID];
+        [__backend resetListUUID];
         [[BananasParseManager sharedManager] setupParseUser];
         notify(kRefreshListUI);
         notify(kPerformSyncNotification);

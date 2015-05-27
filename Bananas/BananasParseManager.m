@@ -133,7 +133,7 @@
 {
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     UIDevice * device = [UIDevice currentDevice];
-    dict[@"listUUID"] = makeUUIDTag([backend listUUID]);
+    dict[@"listUUID"] = makeUUIDTag([__backend listUUID]);
     dict[@"device_name"] = device.name;
     dict[@"device_systemName"] = device.systemName;
     dict[@"device_systemVersion"] = device.systemVersion;

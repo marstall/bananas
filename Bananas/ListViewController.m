@@ -83,7 +83,7 @@
     else
     {
         connectionButton = [[UIBarButtonItem alloc]
-                            initWithTitle:@"connect" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
+                            initWithTitle:@"invite someone!" style:UIBarButtonItemStylePlain target:self action:@selector(share:)
                                          ];
     }
     UIBarButtonItem *syncButton =  [[UIBarButtonItem alloc]
@@ -94,7 +94,7 @@
     
     if (self.shouldShowDoneItems) [self setHideDoneItemsButton];
     else [self setShowDoneItemsButton];
-    if (!self.doneItemsButton)
+    if (!self.doneItemsButton && syncActive)
     {
         self.doneItemsButton = [[UIBarButtonItem alloc]
                                          initWithTitle:@"show done items"
@@ -104,8 +104,12 @@
     }
     self.doneItemsButton.tintColor=UIColorFromRGB(0x777777);
     UIBarButtonItem * space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    self.toolbarItems=@[self.doneItemsButton,space,connectionButton];
+    if (self.doneItemsButton)
+        self.toolbarItems=@[self.doneItemsButton,space,connectionButton];
+    else
+        self.toolbarItems=@[space,connectionButton];
 }
+
 
 
 - (IBAction)settings:(id)sender
@@ -141,14 +145,14 @@
 
 - (IBAction)refreshUI:(id)sender
 {
-    self.items = [backend allItems];
+    self.items = [__backend allItems];
     [self.tableView reloadData];
 }
 
 - (IBAction)sync:(id)sender
 {
-    [self doSetToolBarItems:[backend isSharing]];
-    [backend sync];
+    [self doSetToolBarItems:[__backend isSharing]];
+    [__backend sync];
 }
 
 - (void) setHideDoneItemsButton
@@ -174,9 +178,9 @@
 - (IBAction)showDoneItems:(id)sender
 {
     self.shouldShowDoneItems=YES;
-    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"show_done_items"}];
+    [__backend event:CLICK dimensions:@{BUTTON_TEXT:@"show_done_items"}];
 
-    [backend syncWithDoneItems:YES AndBlock:^{
+    [__backend syncWithDoneItems:YES AndBlock:^{
         [self setHideDoneItemsButton];
     }];
     // deactivate button
@@ -186,9 +190,9 @@
 - (IBAction)hideDoneItems:(id)sender
 {
     self.shouldShowDoneItems=NO;
-    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"hide_done_items"}];
+    [__backend event:CLICK dimensions:@{BUTTON_TEXT:@"hide_done_items"}];
 
-    [backend syncWithDoneItems:NO AndBlock:^{
+    [__backend syncWithDoneItems:NO AndBlock:^{
         [self setShowDoneItemsButton];
     }];
     [self deactivateDoneItemsButton];
@@ -197,8 +201,45 @@
 
 - (IBAction)share:(id)sender
 {
-    [backend event:CLICK dimensions:@{BUTTON_TEXT:@"share"}];
+    [__backend event:CLICK dimensions:@{BUTTON_TEXT:@"share"}];
+    
+    // show explanation prompt
+    NSString * msg = @"The person you're inviting should have the Bananas app launched on their iPhone and be in the same room as you.";
+    if ([UIAlertController class])
+    {
+        UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Invite to connect"            message:msg
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * disconnectAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                    style:UIAlertActionStyleDefault
+                                                                  handler: ^(UIAlertAction * alertAction){
+                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                                          [self showShareScreen];
+                                                                      });}];
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * alertAction){
+        }];
+        
+        [alertController addAction:disconnectAction];
+        [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:msg delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        
+        [alert show];
+    }
+}
 
+- (void)alertView:(UIAlertView *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        [self showShareScreen];
+    }
+}
+
+- (void)showShareScreen
+{
     //show browser controller window
     if (self.browserViewController)
     {
@@ -383,7 +424,7 @@
     if (row>=self.items.count) return;
     Item * item = [self.items objectAtIndex:row];
     item.shouldUpdateRemoteCopy=YES;
-    [backend event:ITEM_DELETE dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+    [__backend event:ITEM_DELETE dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
     [self.items removeObject:item];
     
     // remove item from database
@@ -418,7 +459,7 @@
         if ([textField.text isEqualToString:@""]) return NO;
         Item * item = [Item create:textField.text withUUID:nil];
         item.shouldUpdateRemoteCopy=YES;
-        [backend event:ITEM_ADD dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+        [__backend event:ITEM_ADD dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
 
 //        [self.tableView reloadData];
         [self.items addObject:item ];
@@ -440,7 +481,7 @@
             [item setValue:textField.text forKey:@"text"];
             item.shouldUpdateRemoteCopy=YES;
             item.shouldSendPush=YES;
-            [backend event:ITEM_EDIT dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
+            [__backend event:ITEM_EDIT dimensions:@{ITEM_TEXT:[item valueForKey:@"text"]}];
 
         }
         

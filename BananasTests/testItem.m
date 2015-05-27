@@ -1,19 +1,19 @@
 //
-//  BananasTests.m
-//  BananasTests
+//  testItem.m
+//  Bananas
 //
-//  Created by marstall on 12/18/14.
-//  Copyright (c) 2014 Two Pines. All rights reserved.
+//  Created by marstall on 5/22/15.
+//  Copyright (c) 2015 Two Pines. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface BananasTests : XCTestCase
+@interface testItem : XCTestCase
 
 @end
 
-@implementation BananasTests
+@implementation testItem
 
 - (void)setUp {
     [super setUp];
